@@ -4,12 +4,11 @@ import React, { useState, useEffect } from "react";
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSnacks, setFilteredSnacks] = useState(snacks);
-  const [snackFilter, setSnackFilter] = useState("");
+  const [snackFilter, setSnackFilter] = useState(null);
 
   useEffect(() => {
     filterSnacks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [snacks, searchQuery]);
+  }, [snacks, searchQuery, snackFilter]);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
@@ -33,13 +32,13 @@ export default function App() {
     }
 
     if (snackFilter === "name") {
-      filtered.sort((a, b) => b.product_name.localeCompare(a.product_name));
+      filtered.sort((a, b) => a.product_name.localeCompare(b.product_name));
     } else if (snackFilter === "weight") {
-      filtered.sort((a, b) => b.product_weight - a.product_weight);
+      filtered.sort((a, b) => a.product_weight - b.product_weight);
     } else if (snackFilter === "price") {
-      filtered.sort((a, b) => b.price - a.price);
+      filtered.sort((a, b) => a.price - b.price);
     } else if (snackFilter === "calories") {
-      filtered.sort((a, b) => b.calories - a.calories);
+      filtered.sort((a, b) => a.calories - b.calories);
     }
 
     setFilteredSnacks(filtered);
