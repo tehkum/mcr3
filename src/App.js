@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortColumn, setSortColumn] = useState(null);
-  const [sortDirection, setSortDirection] = useState("asc");
   const [filteredSnacks, setFilteredSnacks] = useState(snacks);
   const [snackFilter, setSnackFilter] = useState({
     nameFilter: false,
@@ -19,15 +17,6 @@ export default function App() {
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
-  };
-
-  const handleSort = (column) => {
-    if (sortColumn === column) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortColumn(column);
-      setSortDirection("asc");
-    }
   };
 
   const filterSnacks = () => {
@@ -132,7 +121,7 @@ export default function App() {
           </tr>
         </thead>
         <tbody>
-          {sortedFilter.map((snack) => (
+          {sortedFilter?.map((snack) => (
             <tr key={snack.id}>
               <td>{snack.id}</td>
               <td>{snack.product_name}</td>
