@@ -7,6 +7,10 @@
   pointer-events: none;
 }
 
+th {
+  cursor: pointer;
+}
+
 .snack-box {
   display: flex;
   justify-content: space-evenly

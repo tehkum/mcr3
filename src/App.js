@@ -1,5 +1,6 @@
 import { snacks } from "./Data";
 import React, { useState, useEffect } from "react";
+import "./App.css"
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -57,8 +58,8 @@ export default function App() {
         <thead>
           <tr>
             <th>ID</th>
-            <th onClick={() => handleSort("name")}>Product Name</th>
-            <th onClick={() => handleSort("weight")}>Product Weight</th>
+            <th onClick={() => handleSort("name")}>Name</th>
+            <th onClick={() => handleSort("weight")}>Weight</th>
             <th onClick={() => handleSort("price")}>Price</th>
             <th onClick={() => handleSort("calories")}>Calories</th>
             <th onClick={() => handleSort("name")}>Ingredients</th>
