@@ -13,6 +13,7 @@ export default function App() {
 
   useEffect(() => {
     filterSnacks();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snacks, searchQuery]);
 
   const handleSearch = (event) => {
