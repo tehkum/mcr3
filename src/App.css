@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+.snack-box {
+  display: flex;
+  justify-content: space-evenly
+}
+
+table {
+  border: 1px solid black;
+  padding: 1rem;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
