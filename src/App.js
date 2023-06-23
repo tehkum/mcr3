@@ -4,20 +4,19 @@ import React, { useState, useEffect } from "react";
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSnacks, setFilteredSnacks] = useState(snacks);
-  const [snackFilter, setSnackFilter] = useState({
-    nameFilter: false,
-    calorieFilter: false,
-    priceFilter: false,
-    weightFilter: false,
-  });
+  const [snackFilter, setSnackFilter] = useState("");
 
   useEffect(() => {
     filterSnacks();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snacks, searchQuery]);
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
+  };
+
+  const handleSort = (filter) => {
+    setSnackFilter(filter);
   };
 
   const filterSnacks = () => {
@@ -33,18 +32,18 @@ export default function App() {
       );
     }
 
+    if (snackFilter === "name") {
+      filtered.sort((a, b) => b.product_name.localeCompare(a.product_name));
+    } else if (snackFilter === "weight") {
+      filtered.sort((a, b) => b.product_weight - a.product_weight);
+    } else if (snackFilter === "price") {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (snackFilter === "calories") {
+      filtered.sort((a, b) => b.calories - a.calories);
+    }
+
     setFilteredSnacks(filtered);
   };
-
-  const sortedFilter = snackFilter?.nameFilter
-    ? filteredSnacks.sort((a, b) => b.product_name - a.product_name)
-    : snackFilter?.weightFilter
-    ? filteredSnacks.sort((a, b) => b.product_weight - a.product_weight)
-    : snackFilter?.priceFilter
-    ? filteredSnacks.sort((a, b) => b.price - a.price)
-    : snackFilter?.calorieFilter
-    ? filteredSnacks.sort((a, b) => b.calories - a.calories)
-    : filteredSnacks;
 
   return (
     <div>
@@ -59,70 +58,15 @@ export default function App() {
         <thead>
           <tr>
             <th>ID</th>
-            <th
-              onClick={() =>
-                setSnackFilter({
-                  nameFilter: true,
-                  calorieFilter: false,
-                  priceFilter: false,
-                  weightFilter: false,
-                })
-              }
-            >
-              Product Name
-            </th>
-            <th
-              onClick={() =>
-                setSnackFilter({
-                  nameFilter: false,
-                  calorieFilter: false,
-                  weightFilter: true,
-                  priceFilter: false,
-                })
-              }
-            >
-              Product Weight
-            </th>
-            <th
-              onClick={() =>
-                setSnackFilter({
-                  nameFilter: false,
-                  calorieFilter: false,
-                  weightFilter: false,
-                  priceFilter: true,
-                })
-              }
-            >
-              Price
-            </th>
-            <th
-              onClick={() =>
-                setSnackFilter({
-                  nameFilter: false,
-                  calorieFilter: true,
-                  weightFilter: false,
-                  priceFilter: false,
-                })
-              }
-            >
-              Calories
-            </th>
-            <th
-              onClick={() =>
-                setSnackFilter({
-                  nameFilter: true,
-                  calorieFilter: false,
-                  weightFilter: false,
-                  priceFilter: false,
-                })
-              }
-            >
-              Ingredients
-            </th>
+            <th onClick={() => handleSort("name")}>Product Name</th>
+            <th onClick={() => handleSort("weight")}>Product Weight</th>
+            <th onClick={() => handleSort("price")}>Price</th>
+            <th onClick={() => handleSort("calories")}>Calories</th>
+            <th onClick={() => handleSort("name")}>Ingredients</th>
           </tr>
         </thead>
         <tbody>
-          {sortedFilter?.map((snack) => (
+          {filteredSnacks.map((snack) => (
             <tr key={snack.id}>
               <td>{snack.id}</td>
               <td>{snack.product_name}</td>
